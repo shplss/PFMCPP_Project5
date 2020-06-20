@@ -35,8 +35,6 @@ Purpose:  This project continues developing Project3.
 #include <iostream>
 #include <math.h>
 
-#pragma pack(1)
-
 /*
  copied UDT 1:
  */
@@ -66,7 +64,7 @@ struct RecStudio
 
 RecStudio::~RecStudio()
 {
-std::cout << "\nRecStudio Destructor." << std::endl;
+    std::cout << "\nRecStudio Destructor." << std::endl;
 }
 
 void RecStudio::recordAlbum(int numMusicians, int genreCode, int amountTime)
