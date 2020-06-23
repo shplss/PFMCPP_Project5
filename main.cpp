@@ -91,6 +91,16 @@ struct RecStudio
     void testAllEquipment();
 
     float yearlyRevenew(float monthRevenew, int periodInMonths);
+
+    void usingThis1()
+    {
+        std::cout << "\nAmount to charge to the studio client is: " << this->chargeSession(20, 0.1f,50.5f) << " euros." << std::endl;
+    }
+
+    void usingThis2()
+    {
+        std::cout << "\nRevenew amount for the year is: " << this->yearlyRevenew(this->revenewPerMonth, 12) << " euros." << std::endl;
+    }
 };
 
 RecStudio::~RecStudio()
@@ -173,6 +183,11 @@ struct Supermarket
     void bakeBread(int breadType, int bakeQuantity);
 
     void checkCashiers(int cashierAmount);
+
+    void usingThis()
+    {
+        std::cout << "\nAmount to charge to the supermarket client is: " << this->chargeClient(25.6f) << " euros." << std::endl;
+    }
 };
 
 Supermarket::~Supermarket()
@@ -297,6 +312,13 @@ struct Bakery
     float foodWaste_Kg(int amountDays);
 
     Bread makeBread(std::string breadName, int amountBake);
+
+    void usingThis()
+    {
+        Bread bread = this->makeBread("White Bread", 40);
+
+        std::cout << "\n" << bread.units << " units of " << bread.name << " have just been baked." << std::endl;
+    }
 };
 
 Bakery::~Bakery()
@@ -366,6 +388,12 @@ struct StudioComplex
 
     void printStudioInfo();
     int buyMicrophones(int quantity);
+
+    void usingThis()
+    {
+        this->mainStudio.numMicrophones = this->buyMicrophones(5);
+        std::cout << "\nNew Microphone Quantity: " << this->mainStudio.numMicrophones << std::endl;
+    }
 };
 
 void StudioComplex::printStudioInfo()
@@ -460,8 +488,10 @@ int main()
     recStudio.testAllEquipment();
 
     std::cout << "\nAmount to charge to the studio client is: " << recStudio.chargeSession(20, 0.1f,50.5f) << " euros." << std::endl;
+    recStudio.usingThis1();
 
     std::cout << "\nRevenew amount for the year is: " << recStudio.yearlyRevenew(recStudio.revenewPerMonth, 12) << " euros." << std::endl;
+    recStudio.usingThis2();
 
     // Supermarket
 
@@ -469,6 +499,7 @@ int main()
     superMarket.bakeBread(3, 30);
 
     std::cout << "\nAmount to charge to the supermarket client is: " << superMarket.chargeClient(25.6f) << " euros." << std::endl;
+    superMarket.usingThis();
 
     superMarket.checkCashiers(superMarket.numActiveChashiers);
 
@@ -490,6 +521,7 @@ int main()
     auto bread = bakery.makeBread("White Bread", 40);
 
     std::cout << "\n" << bread.units << " units of " << bread.name << " have just been baked." << std::endl;
+    bakery.usingThis();
 
     // StudioComplex
 
@@ -498,6 +530,7 @@ int main()
     studioComplex.printStudioInfo();
     studioComplex.mainStudio.numMicrophones = studioComplex.buyMicrophones(5);
     std::cout << "\nNew Microphone Quantity: " << studioComplex.mainStudio.numMicrophones << std::endl;
+    studioComplex.usingThis();
 
     // Neighbourhood
 
