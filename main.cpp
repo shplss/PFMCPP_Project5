@@ -47,6 +47,7 @@ You don't have to do this, you can keep your current object name and just change
 
 #include <iostream>
 #include <math.h>
+#include "LeakedObjectDetector.h"
 
 /*
  copied UDT 1:
@@ -83,6 +84,22 @@ struct RecStudio
     {
         std::cout << "\nRevenew amount for the year is: " << this->yearlyRevenew(this->revenewPerMonth, 12) << " euros." << std::endl;
     }
+
+    JUCE_LEAK_DETECTOR(RecStudio)
+};
+
+struct RecStudioWrapper
+{
+    RecStudioWrapper(RecStudio* ptr) : ptrToStudio(ptr) {}
+    
+    ~RecStudioWrapper()
+    {
+        delete ptrToStudio;
+    }
+
+    RecStudio* ptrToStudio = nullptr;
+
+    JUCE_LEAK_DETECTOR(RecStudioWrapper)
 };
 
 RecStudio::~RecStudio()
@@ -158,7 +175,23 @@ struct Supermarket
         bool updatePrice(float newPrice);
         int stockPrediction(int salesPeriodInMonths, int salesAmount, int currentStock);
         float priceComparison(Product prodToCompareWith);
-    };                       
+
+        JUCE_LEAK_DETECTOR(Product)
+    };         
+
+    struct ProductWrapper
+    {
+        ProductWrapper(Product* ptr) : ptrToProduct(ptr) {}
+        
+        ~ProductWrapper()
+        {
+            delete ptrToProduct;
+        }
+
+        Product* ptrToProduct = nullptr;
+
+        JUCE_LEAK_DETECTOR(ProductWrapper)
+    };              
 
     float chargeClient(float productTotal, float taxAmount = 0.21f, float discount = 0);
     bool restockProducts(Product prod, int restockQuantity);
@@ -170,6 +203,22 @@ struct Supermarket
     {
         std::cout << "\nAmount to charge to the supermarket client is: " << this->chargeClient(25.6f) << " euros." << std::endl;
     }
+
+    JUCE_LEAK_DETECTOR(Supermarket)
+};
+
+struct SupermarketWrapper
+{
+    SupermarketWrapper(Supermarket* ptr) : ptrToSupermarket(ptr) {}
+    
+    ~SupermarketWrapper()
+    {
+        delete ptrToSupermarket;
+    }
+
+    Supermarket* ptrToSupermarket = nullptr;
+
+    JUCE_LEAK_DETECTOR(SupermarketWrapper)
 };
 
 Supermarket::~Supermarket()
@@ -286,8 +335,24 @@ struct Bakery
         std::string name = ""; 
         int units = 0;
 
-        Bread(std::string n, int u) : name(n), units(u) { } 
+        Bread(std::string n, int u) : name(n), units(u) { }
+
+        JUCE_LEAK_DETECTOR(Bread)
     };  
+
+    struct BreadWrapper
+    {
+        BreadWrapper(Bread* ptr) : ptrToBread(ptr) {}
+        
+        ~BreadWrapper()
+        {
+            delete ptrToBread;
+        }
+
+        Bread* ptrToBread = nullptr;
+
+        JUCE_LEAK_DETECTOR(BreadWrapper)
+    };
 
     void bakeCake(int cakeType, int bakeQuantity);
     bool deliverBread(int clientID, int orderID, int deliveryTime);
@@ -301,6 +366,22 @@ struct Bakery
 
         std::cout << "\n" << bread.units << " units of " << bread.name << " have just been baked." << std::endl;
     }
+
+    JUCE_LEAK_DETECTOR(Bakery)
+};
+
+struct BakeryWrapper
+{
+    BakeryWrapper(Bakery* ptr) : ptrToBakery(ptr) {}
+    
+    ~BakeryWrapper()
+    {
+        delete ptrToBakery;
+    }
+
+    Bakery* ptrToBakery = nullptr;
+
+    JUCE_LEAK_DETECTOR(BakeryWrapper)
 };
 
 Bakery::~Bakery()
@@ -376,6 +457,22 @@ struct StudioComplex
         this->mainStudio.numMicrophones = this->buyMicrophones(5);
         std::cout << "\nNew Microphone Quantity: " << this->mainStudio.numMicrophones << std::endl;
     }
+
+    JUCE_LEAK_DETECTOR(StudioComplex)
+};
+
+struct StudioComplexWrapper
+{
+    StudioComplexWrapper(StudioComplex* ptr) : ptrToStudioComplex(ptr) {}
+    
+    ~StudioComplexWrapper()
+    {
+        delete ptrToStudioComplex;
+    }
+
+    StudioComplex* ptrToStudioComplex = nullptr;
+
+    JUCE_LEAK_DETECTOR(StudioComplexWrapper)
 };
 
 void StudioComplex::printStudioInfo()
@@ -417,6 +514,22 @@ struct Neighbourhood
 
     Bakery createNewBakery(int flourBags, int breadAmount, int cakeAmount, float salesDay, int clientDeliveryProd);
     Supermarket::Product createNewProduct(int id, std::string name, float price, int stock, int stockComing);
+
+    JUCE_LEAK_DETECTOR(Neighbourhood)
+};
+
+struct NeighbourhoodWrapper
+{
+    NeighbourhoodWrapper(Neighbourhood* ptr) : ptrToNeighbourhood(ptr) {}
+    
+    ~NeighbourhoodWrapper()
+    {
+        delete ptrToNeighbourhood;
+    }
+
+    Neighbourhood* ptrToNeighbourhood = nullptr;
+
+    JUCE_LEAK_DETECTOR(NeighbourhoodWrapper)
 };
 
 Bakery Neighbourhood::createNewBakery(int flourBags, int breadAmount, int cakeAmount, float salesDay, int clientDeliveryProd)
@@ -459,71 +572,75 @@ Supermarket::Product Neighbourhood::createNewProduct(int id, std::string name, f
  Wait for my code review.
  */
 
-
 int main()
 
 {
     // RecStudio
 
-    RecStudio recStudio;
-    recStudio.recordAlbum(5, 2, 10);
-    recStudio.testAllEquipment();
+    RecStudioWrapper recStudioWrap(new RecStudio());
+    recStudioWrap.ptrToStudio->recordAlbum(5, 2, 10);
+    recStudioWrap.ptrToStudio->testAllEquipment();
 
-    std::cout << "\nAmount to charge to the studio client is: " << recStudio.chargeSession(20, 0.1f,50.5f) << " euros." << std::endl;
-    recStudio.usingThis1();
+    std::cout << "\nAmount to charge to the studio client is: " << recStudioWrap.ptrToStudio->chargeSession(20, 0.1f,50.5f) << " euros." << std::endl;
+    recStudioWrap.ptrToStudio->usingThis1();
 
-    std::cout << "\nRevenew amount for the year is: " << recStudio.yearlyRevenew(recStudio.revenewPerMonth, 12) << " euros." << std::endl;
-    recStudio.usingThis2();
+    std::cout << "\nRevenew amount for the year is: " << recStudioWrap.ptrToStudio->yearlyRevenew(recStudioWrap.ptrToStudio->revenewPerMonth, 12) << " euros." << std::endl;
+    recStudioWrap.ptrToStudio->usingThis2();
 
     // Supermarket
 
-    Supermarket superMarket;
-    superMarket.bakeBread(3, 30);
+    SupermarketWrapper supermarketWrap(new Supermarket());
+    supermarketWrap.ptrToSupermarket->bakeBread(3, 30);
 
-    std::cout << "\nAmount to charge to the supermarket client is: " << superMarket.chargeClient(25.6f) << " euros." << std::endl;
-    superMarket.usingThis();
+    std::cout << "\nAmount to charge to the supermarket client is: " << supermarketWrap.ptrToSupermarket->chargeClient(25.6f) << " euros." << std::endl;
+    supermarketWrap.ptrToSupermarket->usingThis();
 
-    superMarket.checkCashiers(superMarket.numActiveChashiers);
+    supermarketWrap.ptrToSupermarket->checkCashiers(supermarketWrap.ptrToSupermarket->numActiveChashiers);
 
-    Supermarket::Product prod1;
-    Supermarket::Product prod2;
+    Supermarket::ProductWrapper prod1(new Supermarket::Product());
+    Supermarket::ProductWrapper prod2(new Supermarket::Product());
 
-    prod1.productID = 1;
-    prod1.productName = "Bananas";
-    prod1.retailPrice = 1.95f;
-    prod1.currentStock = 40;
-    prod1.orderedStock = 20;
+    prod1.ptrToProduct->productID = 1;
+    prod1.ptrToProduct->productName = "Bananas";
+    prod1.ptrToProduct->retailPrice = 1.95f;
+    prod1.ptrToProduct->currentStock = 40;
+    prod1.ptrToProduct->orderedStock = 20;
 
     // Bakery
 
-    Bakery bakery;
-    bakery.bakeCake(1, 4);
-    bakery.deliverBread(50, 724, 1345);
+    BakeryWrapper bakeryWrap(new Bakery());
+    bakeryWrap.ptrToBakery->bakeCake(1, 4);
+    bakeryWrap.ptrToBakery->deliverBread(50, 724, 1345);
 
-    auto bread = bakery.makeBread("White Bread", 40);
+    Bakery::BreadWrapper breadWrap(new Bakery::Bread("White Bread", 40));
 
-    std::cout << "\n" << bread.units << " units of " << bread.name << " have just been baked." << std::endl;
-    bakery.usingThis();
+    auto bread = bakeryWrap.ptrToBakery->makeBread("White Bread", 40);
+
+    std::cout << "\n" << breadWrap.ptrToBread->units << " units of " << breadWrap.ptrToBread->name << " have just been baked." << std::endl;
+    bakeryWrap.ptrToBakery->usingThis();
 
     // StudioComplex
 
-    StudioComplex studioComplex(recStudio);
+    StudioComplexWrapper studioComplexWrap(new StudioComplex(*recStudioWrap.ptrToStudio));
 
-    studioComplex.printStudioInfo();
-    studioComplex.mainStudio.numMicrophones = studioComplex.buyMicrophones(5);
-    std::cout << "\nNew Microphone Quantity: " << studioComplex.mainStudio.numMicrophones << std::endl;
-    studioComplex.usingThis();
+    studioComplexWrap.ptrToStudioComplex->printStudioInfo();
+    studioComplexWrap.ptrToStudioComplex->mainStudio.numMicrophones = studioComplexWrap.ptrToStudioComplex->buyMicrophones(5);
+    std::cout << "\nNew Microphone Quantity: " << studioComplexWrap.ptrToStudioComplex->mainStudio.numMicrophones << std::endl;
+    studioComplexWrap.ptrToStudioComplex->usingThis();
 
     // Neighbourhood
 
-    Neighbourhood neighbourhood;
+    NeighbourhoodWrapper neighbourhoodWrap(new Neighbourhood());
 
-    Bakery bakeryA = neighbourhood.createNewBakery(40, 30, 10, 3000.0f, 15);
-    Bakery bakeryB = neighbourhood.createNewBakery(20, 10, 5, 1500.0f, 5);
+    Bakery bakeryA = neighbourhoodWrap.ptrToNeighbourhood->createNewBakery(40, 30, 10, 3000.0f, 15);
+    Bakery bakeryB = neighbourhoodWrap.ptrToNeighbourhood->createNewBakery(20, 10, 5, 1500.0f, 5);
     
-    Supermarket::Product prodA = neighbourhood.createNewProduct(0, "Soap", 2.99f, 100, 50);
-    Supermarket::Product prodB = neighbourhood.createNewProduct(1, "Shampoo", 2.59f, 200, 30);
+    Supermarket::Product prodA = neighbourhoodWrap.ptrToNeighbourhood->createNewProduct(0, "Soap", 2.99f, 100, 50);
+    Supermarket::Product prodB = neighbourhoodWrap.ptrToNeighbourhood->createNewProduct(1, "Shampoo", 2.59f, 200, 30);
 
     std::cout << "good to go!" << std::endl;
 
 }
+
+
+
