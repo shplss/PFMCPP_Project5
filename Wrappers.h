@@ -10,7 +10,7 @@
 
 struct RecStudioWrapper
 {
-    RecStudioWrapper(RecStudio* ptr) : ptrToStudio(ptr) {}
+    RecStudioWrapper(RecStudio*);
     
     ~RecStudioWrapper();
 
@@ -21,7 +21,7 @@ struct RecStudioWrapper
 
 struct SupermarketWrapper
 {
-    SupermarketWrapper(Supermarket* ptr) : ptrToSupermarket(ptr) {}
+    SupermarketWrapper(Supermarket*);
     
     ~SupermarketWrapper();
 
@@ -32,7 +32,7 @@ struct SupermarketWrapper
 
 struct ProductWrapper
 {
-    ProductWrapper(Supermarket::Product* ptr) : ptrToProduct(ptr) {}
+    ProductWrapper(Supermarket::Product*);
     
     ~ProductWrapper();
 
@@ -43,7 +43,7 @@ struct ProductWrapper
 
 struct BakeryWrapper
 {
-    BakeryWrapper(Bakery* ptr) : ptrToBakery(ptr) {}
+    BakeryWrapper(Bakery*);
     
     ~BakeryWrapper();
 
@@ -54,7 +54,7 @@ struct BakeryWrapper
 
 struct BreadWrapper
 {
-    BreadWrapper(Bakery::Bread* ptr) : ptrToBread(ptr) {}
+    BreadWrapper(Bakery::Bread*);
     
     ~BreadWrapper();
 
@@ -65,7 +65,7 @@ struct BreadWrapper
 
 struct StudioComplexWrapper
 {
-    StudioComplexWrapper(StudioComplex* ptr) : ptrToStudioComplex(ptr) {}
+    StudioComplexWrapper(StudioComplex*);
     
     ~StudioComplexWrapper();
 
@@ -76,7 +76,7 @@ struct StudioComplexWrapper
 
 struct NeighbourhoodWrapper
 {
-    NeighbourhoodWrapper(Neighbourhood* ptr) : ptrToNeighbourhood(ptr) {}
+    NeighbourhoodWrapper(Neighbourhood*);
     
     ~NeighbourhoodWrapper();
 
