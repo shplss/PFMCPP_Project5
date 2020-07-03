@@ -1,5 +1,9 @@
 #include "Wrappers.h"
 
+#include "RecStudio.h"
+#include "StudioComplex.h"
+#include "Neighbourhood.h"
+
 RecStudioWrapper::RecStudioWrapper(RecStudio* ptr) : ptrToStudio(ptr) { }
 
 RecStudioWrapper::~RecStudioWrapper()

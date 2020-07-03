@@ -2,11 +2,12 @@
 
 #include "LeakedObjectDetector.h"
 
-#include "RecStudio.h"
 #include "Supermarket.h"
 #include "Bakery.h"
-#include "StudioComplex.h"
-#include "Neighbourhood.h"
+
+struct RecStudio;
+struct StudioComplex;
+struct Neighbourhood;
 
 struct RecStudioWrapper
 {
