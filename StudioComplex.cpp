@@ -1,5 +1,10 @@
 #include "StudioComplex.h"
 
+StudioComplex::StudioComplex(RecStudio rec) : mainStudio(rec) 
+{ 
+    
+}
+
 StudioComplex::~StudioComplex()
 { 
     std::cout << "\nStudio Complex no longer exists." << std::endl; 

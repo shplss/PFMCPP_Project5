@@ -14,7 +14,7 @@ struct Supermarket
     float profitPerDay { 3000.0f };
     int topSellerID { 0 };
 
-    Supermarket() {}
+    Supermarket();
 
     ~Supermarket();
 

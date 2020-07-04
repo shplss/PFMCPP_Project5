@@ -14,11 +14,7 @@ struct RecStudio
     float multiDayDiscount;
     float revenewPerMonth;
 
-    RecStudio() : numMicrophones(25),
-                  numOutboardUnits(30),
-                  sessionPerMonth(10),
-                  multiDayDiscount(0.2f),
-                  revenewPerMonth(6000.0f) {}
+    RecStudio();
 
     ~RecStudio();
 

@@ -14,11 +14,7 @@ struct Bakery
     float daySales;
     int XClient_totalProdDeliver;
 
-    Bakery() : numBagsFlour(20),
-               XBread_Amount(40),
-               XCake_Amount(5),
-               daySales(5000.0f),
-               XClient_totalProdDeliver(5) {}
+    Bakery();
 
     ~Bakery();
 

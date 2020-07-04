@@ -13,7 +13,7 @@ struct StudioComplex
 {
     RecStudio mainStudio;
 
-    StudioComplex(RecStudio rec) : mainStudio(rec) { }
+    StudioComplex(RecStudio rec);
 
     ~StudioComplex();
 

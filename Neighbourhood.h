@@ -15,7 +15,7 @@ struct Neighbourhood
     Supermarket superMarket;
     Bakery bakery;
 
-    Neighbourhood() { }
+    Neighbourhood();
 
     ~Neighbourhood();
 

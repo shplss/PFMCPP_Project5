@@ -1,5 +1,10 @@
 #include "Neighbourhood.h"
 
+Neighbourhood::Neighbourhood() 
+{ 
+    
+}
+
 Neighbourhood::~Neighbourhood()
 {
     Bakery bakeryOnDestruction;

@@ -1,6 +1,11 @@
 #include <math.h>
 #include "Supermarket.h"
 
+Supermarket::Supermarket() 
+{
+    
+}
+
 Supermarket::~Supermarket()
 {
     std::cout << "\nSupermarket Destructor." << std::endl;
